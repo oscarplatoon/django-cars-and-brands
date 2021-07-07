@@ -1,0 +1,12 @@
+{% extends 'cars_and_brands/base.html' %}
+
+{% block title %}
+    {{ brand.name }}
+{% endblock %}
+   
+{% block content %}
+    <h2><a href="{% url 'list_cars' brand_id=brand.id %}">List cars for {{ brand.name }}</a></h2>
+    <a href="{% url 'show_brands' %}">Home</a>
+    <a href="{% url 'edit_brand' brand_id=brand.id %}">Edit</a>
+    <a href="{% url 'delete_brand' brand_id=brand.id %}">Delete</a>
+{% endblock %}
