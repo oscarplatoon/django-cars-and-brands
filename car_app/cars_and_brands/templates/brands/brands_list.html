@@ -1,0 +1,13 @@
+<h1> All Brands </h1>
+
+<ul>
+  {% for brand in brands %}
+  <li>
+    <h1><a href="{% url 'edit_brand' brand_id=brand.id %}">{{brand.brand_name}}</a></h1>
+    <br>
+    <a href="{% url 'cars_list' brand_id=brand.id %}">Cars made by {{brand.brand_name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'new_brand' %}">Create a new brand</a>
