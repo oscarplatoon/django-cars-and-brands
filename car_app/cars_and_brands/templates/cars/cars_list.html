@@ -1,0 +1,11 @@
+<h1> All cars made by {{brand.brand_name}}</h1>
+<ul>
+  {% for car in cars %}
+    <div>
+      <li><a href="{% url 'edit_car' brand_id=brand.id car_id=car.id %}">{{car.model_name}}</a></li>
+    </div>
+  {% endfor %}
+</ul>
+<a href="{% url 'brands_list' %}">Return to Brand List</a>
+<br>
+<a href="{% url 'new_car' brand_id=brand.id %}">Create a new car</a>
