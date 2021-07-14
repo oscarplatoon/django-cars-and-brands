@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h2>{{ brand.name }}</h2>
+    <br>
+    <br>
+    <a href="{% url 'edit_brand' brand_id=brand.id %}"> Edit brand</a>
+    <br>
+    <br>
+    <form name="delete_brand" method="POST" action="{% url 'delete_brand' brand_id=brand.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Delete brand" />
+    </form>
+  </div>
+  
+</body>
+</html>
