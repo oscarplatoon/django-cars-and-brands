@@ -1,0 +1,15 @@
+  {% extends 'base.html' %}
+
+    {% block content %}
+      <h1>Brands</h1>
+    <!-- loop through brands -->
+    <!-- in views.py pulling all_brands  -->
+      {% for brand in all_brands %} 
+      <div>
+        <a href="{% url 'brand_detail' brand_id=brand.id %}">{{ brand.name }}</a>
+      </div>
+      
+      {% endfor %}
+      <a href="{% url 'new_brand' %}">Create New Brand</a>
+    {% endblock %}
+

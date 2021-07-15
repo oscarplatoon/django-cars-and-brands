@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ brand.name }}</h1>
+  <!-- display models below cars -->
+  {% for car in brand.cars.all %}
+    <div>
+      <p>{{ car.model }}</p>
+    </div>
+  {% endfor %}
+{% endblock %}
+
