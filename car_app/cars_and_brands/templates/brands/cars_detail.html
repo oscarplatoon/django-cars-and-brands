@@ -1,0 +1,13 @@
+<div>
+  <h2>{{car.make}} {{car.type_model}}</h2>
+  <p>Brand: {{brand.title}}</p>
+  <br>
+  <br>
+  <a href="{% url 'edit_car' brand_id=brand.id car_id=car.id%}"> Edit Car</a>
+  <br>
+  <br>
+  <form name="delete_car" method="POST" action="{% url 'delete_car' brand_id=brand.id car_id=car.id %}">
+    {% csrf_token %}
+    <input type="submit" value="Delete Car" />
+  </form>
+</div>
