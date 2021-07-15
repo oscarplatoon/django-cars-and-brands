@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Brands
-from .forms import BrandsForm
+from .models import Brands, Cars
+from .forms import BrandsForm, CarsForm
 
 
 def get_brand(brands_id):
@@ -42,3 +42,49 @@ def edit_brand(request, brands_id):
     else:
         form = BrandsForm(instance=brands)
     return render(request, 'brands/brands_form.html', {'form': form, 'type_of_request': 'Edit'})
+
+# Cars
+
+def get_car(cars_id):
+    return Cars.objects.get(id=cars_id)
+
+def cars_list(request, brands_id):
+    car = Cars.objects.all()
+    return render(request, 'brands/cars_list.html', {'car': car})
+
+def cars_detail(request, brands_id, cars_id):
+    brand = get_brand(brands_id)
+    car = get_car(cars_id)
+    return render(request, 'brands/car_detail.html', {'brand': brand, 'car': car})
+
+def new_car(request, brands_id):
+    brand = get_brand(brands_id)
+    if request.method == "POST":
+        form = CarsForm(request.POST)
+        if form.is_valid():
+            car = form.save(commit=False)
+            car.brand = brand
+            car.save()
+            return redirect('cars_detail', brands_id=car.brands.id, cars_id=car.id)
+    else:
+        form = CarsForm()
+    return render(request, 'brands/cars_form.html', {'form': form, 'type_of_request': 'New'})
+
+def edit_car(request, brands_id, cars_id):
+    brand = get_brand(brands_id)
+    car = get_car(cars_id)
+    if request.method == "POST":
+        form = CarsForm(request.POST, instance=car)
+        if form.is_valid():
+            student = form.save(commit=False)
+            student.save()
+            return redirect('car_detail', cars_id=car.id, brands_id=brands_id)
+    else:
+        form = CarsForm(instance=car)
+    return render(request, 'brands/cars_form.html', {'form': form, 'type_of_request': 'Edit'})
+
+def delete_car(request, brands_id, cars_id):
+    if request.method == "POST":
+        car = get_car(cars_id)
+        car.delete()
+    return redirect('cars_list', brands_id=brands_id)

@@ -10,4 +10,7 @@
     {% csrf_token %}
     <input type="submit" value="Delete Brand" />
   </form>
+  <div>
+    <a href="{% url 'cars_list' brands_id=brands.id %}">Cars from this Brand</a>
+  </div>
 </div>
