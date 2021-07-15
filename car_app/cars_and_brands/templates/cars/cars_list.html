@@ -10,19 +10,16 @@
 </head>
 <body>
   <div class="d-flex justify-content-center align-items-center flex-column">
-    <h2>{{ brand.name }}</h2>
-    <div>
-      <a href="{% url 'cars_list' brand_id=brand.id %}">Cars made by this Brand</a>
-    </div>
-    <br>
-    <a href="{% url 'edit_brand' brand_id=brand.id %}"> Edit brand</a>
-    <form name="delete_brand" method="POST" action="{% url 'delete_brand' brand_id=brand.id %}">
-      {% csrf_token %}
-      <input type="submit" value="Delete brand" />
-    </form>
-    
-  </div>
+    <h1> All Cars made by {{ brand.name }} </h1>
+    <ul class="list-group w-20">
+      {% for car in cars %}
+        <div>
+          <li class="list-group-item"><a href="{% url 'car_detail' brand_id=brand.id car_id=car.id %}">{{ car.name }}</a></li>
+        </div>
+      {% endfor %}
+    </ul>
 
-  
+    <a href="{% url 'new_car' brand_id=brand.id %}">Add a new car</a>
+  </div>
 </body>
 </html>

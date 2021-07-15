@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, HttpResponse
-from .forms import BrandForm
-from .models import Brand
+from django.shortcuts import render, redirect
+from .forms import BrandForm, CarForm
+from .models import Brand, Car
 
 # Create your views here.
 def get_brand(brand_id):
@@ -44,3 +44,49 @@ def delete_brand(request, brand_id):
         brand = get_brand(brand_id)
         brand.delete()
     return redirect('brands_list')
+
+# car controllers
+def get_car(car_id):
+    return Car.objects.get(id=car_id)
+
+def cars_list(request, brand_id):
+    brand = get_brand(brand_id)
+    cars = brand.cars.all()
+    return render(request, 'cars/cars_list.html', {'brand': brand, 'cars': cars})
+
+def car_detail(request, brand_id, car_id):
+    brand = get_brand(brand_id)
+    car = get_car(car_id)
+    return render(request, 'cars/car_detail.html', {'brand': brand, 'car': car})
+
+def new_car(request, brand_id):
+    brand = get_brand(brand_id)
+    if request.method == "POST":
+        form = CarForm(request.POST)
+        if form.is_valid():
+            car = form.save(commit=False)
+            car.brand = brand
+            car.save()
+            return redirect('car_detail', brand_id=car.brand.id, car_id=car.id)
+    else:
+        form = CarForm()
+    return render(request, 'cars/car_form.html', {'form': form, 'type_of_request': 'New'})
+
+def edit_car(request, brand_id, car_id):
+    brand = get_brand(brand_id)
+    car = get_car(car_id)
+    if request.method == "POST":
+        form = CarForm(request.POST, instance=car)
+        if form.is_valid():
+            car = form.save(commit=False)
+            car.save()
+            return redirect('car_detail', car_id=car.id, brand_id=brand_id)
+    else:
+        form = CarForm(instance=car)
+    return render(request, 'cars/car_form.html', {'form': form, 'type_of_request': 'Edit'})
+
+def delete_car(request, brand_id, car_id):
+    if request.method == "POST":
+        car = get_car(car_id)
+        car.delete()
+    return redirect('car_list', brand_id=brand_id)
