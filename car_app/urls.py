@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.contrib import admin
+from django.urls import path, include
+from cars_and_brands import views
 
-# Create your views here.
 urlpatterns = [
     path("", views.index, name="home"),
     path("/brands", views.brands, name="brand_list")# a list of all the car brands
@@ -12,3 +13,5 @@ urlpatterns = [
     path("/pathbrands/<:brand_id>/cars/<:car_id>", views.model_detail, name="model_detail") # see a specific car for a specific car brand
     path("/brands/<:brand_id>/cars/<:car_id>/edit", views.model_edit, name="model_edit")# edit page for a specific car under a specific car brand
 ]
+
+
