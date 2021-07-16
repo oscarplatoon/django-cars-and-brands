@@ -2,11 +2,24 @@
 
 {% block content %}
   <h1>{{ brand.name }}</h1>
+  <a href="{% url 'brand_edit' brand_id=brand.id %}">Edit {{ brand.name }}</a>
+  <form method='POST' action="{% url 'brand_delete' brand_id=brand.id %}">
+    {% csrf_token %}
+    <button type='submit'>Delete {{ brand.name }}</button>
+  </form>
+  <a href="{% url 'brands' %}">Home</a>
+  <hr>
+  <h1>{{ brand.name }} Models</h1>
+
+
   <!-- display models below cars -->
   {% for car in brand.cars.all %}
     <div>
-      <p>{{ car.model }}</p>
+      <a href="{% url 'car_detail' brand_id=brand.id car_id=car.id %}">{{ car.model }}</a>
     </div>
-  {% endfor %}
+    {% endfor %}
+    <hr>
+    <a href="{% url 'new_car' brand_id=brand.id %}">Create New {{ brand.name }} Model</a>
+    
 {% endblock %}
 
