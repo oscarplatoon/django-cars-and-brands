@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block page-title %}
+{% if create_or_update %}
+Create Brand
+{% else %}
+Update Brand
+{% endif %}
+{% endblock %}
+
+{% block main-content %}
+<h1>
+{% if create_or_update %}
+Create New Brand:
+{% else %}
+Update Brand: {{ brand.name }}
+{% endif %}
+</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit">
+        {% if create_or_update %}
+        Add Brand
+        {% else %}
+        Update Brand
+        {% endif %}
+    </button>
+</form>
+{% endblock %}
